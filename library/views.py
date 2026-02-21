@@ -4,6 +4,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db import connection, transaction
 import json
 
+
+def index(request):
+    return render(request, 'librarySystem.html')
+
 # ================== LIBRARIAN LOGIN ==================
 @csrf_exempt
 def librarian_login(request):
