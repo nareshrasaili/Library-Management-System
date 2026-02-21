@@ -544,7 +544,21 @@ UPDATE books SET available_copies = available_copies + 1 WHERE book_id = %s;
 ```
 ---
 ### Screenshorts
+### Login Page
 <img width="2294" height="1137" alt="Screenshot 2026-02-21 213119" src="https://github.com/user-attachments/assets/32c7df09-3f39-49c7-82e7-555de0de9878" />
+
+### Dashboard
+<img width="2530" height="1199" alt="Screenshot 2026-02-21 213139" src="https://github.com/user-attachments/assets/181be733-7771-4a81-9510-d859227fff59" />
+
+### Book Management
+<img width="2341" height="1168" alt="Screenshot 2026-02-21 213156" src="https://github.com/user-attachments/assets/dc3cd325-5faf-4d7d-bf15-d26fb2356230" />
+
+### Student Management
+
+<img width="2492" height="1164" alt="Screenshot 2026-02-21 213216" src="https://github.com/user-attachments/assets/88024d88-5961-46a6-80fb-abc3c8aac152" />
+
+### Issue/ Return 
+<img width="2490" height="1178" alt="Screenshot 2026-02-21 213234" src="https://github.com/user-attachments/assets/bf8dd2bb-4e5d-4c6c-a382-c55d1cdf1ed1" />
 
 ---
 
