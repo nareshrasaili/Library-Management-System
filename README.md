@@ -542,6 +542,9 @@ WHERE issue_id = %s;
 -- RETURN: Step 3 — restore availability
 UPDATE books SET available_copies = available_copies + 1 WHERE book_id = %s;
 ```
+---
+### Screenshorts
+<img width="2294" height="1137" alt="Screenshot 2026-02-21 213119" src="https://github.com/user-attachments/assets/32c7df09-3f39-49c7-82e7-555de0de9878" />
 
 ---
 
