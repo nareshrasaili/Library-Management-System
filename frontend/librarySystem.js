@@ -1,3 +1,6 @@
+// ================= BASE URL =================
+const BASE_URL = "https://library-management-system-10rp.onrender.com/api/";
+
 // ================= BASIC ELEMENTS =================
 const loginSection = document.getElementById("login-section");
 const app = document.getElementById("app");
@@ -31,7 +34,7 @@ const removeStudentBtn = document.querySelector(".btn-danger");
 const issueRollNo = document.getElementById("issueRollNo");
 const issueBookNo = document.getElementById("issueBookNo");
 const issueDateInput = document.getElementById("issueDate");
-const returnDateInput = document.getElementById("ReturnDate"); // ID matches HTML
+const returnDateInput = document.getElementById("ReturnDate");
 const issueBtn = document.getElementById("issueBtn");
 const returnBtn = document.getElementById("returnBtn");
 
@@ -53,7 +56,7 @@ loginBtn.addEventListener("click", async () => {
     const password = document.querySelector("#login-section input[type='password']").value;
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/api/login/", {
+        const response = await fetch(`${BASE_URL}login/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password })
@@ -102,7 +105,7 @@ document.getElementById("addBookBtn").addEventListener("click", async () => {
     }
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/api/add-book/", {
+        const response = await fetch(`${BASE_URL}add-book/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -136,7 +139,7 @@ document.getElementById("bookSearchBtn").addEventListener("click", async () => {
     if (!bookNo) return showMessage("bookMessage", "Enter book number", "error");
 
     try {
-        const response = await fetch(`http://127.0.0.1:8000/api/search-book/?book_number=${bookNo}`);
+        const response = await fetch(`${BASE_URL}search-book/?book_number=${bookNo}`);
         const data = await response.json();
 
         const resultBox = document.getElementById("bookSearchResult");
@@ -165,7 +168,7 @@ document.getElementById("addStudentBtn").addEventListener("click", async () => {
     }
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/api/add-student/", {
+        const response = await fetch(`${BASE_URL}add-student/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -197,7 +200,7 @@ document.getElementById("studentSearchBtn").addEventListener("click", async () =
     if (!roll) return showMessage("studentSearchMessage", "Enter Roll No", "error");
 
     try {
-        const response = await fetch(`http://127.0.0.1:8000/api/search-student/?roll_no=${roll}`);
+        const response = await fetch(`${BASE_URL}search-student/?roll_no=${roll}`);
         const data = await response.json();
 
         if (data.status === "success") {
@@ -220,13 +223,14 @@ document.getElementById("studentSearchBtn").addEventListener("click", async () =
         console.error(err);
     }
 });
+
 // ================= REMOVE STUDENT =================
 removeStudentBtn.addEventListener("click", async () => {
     const roll = selectedStudentRoll.value;
     if (!roll) return showMessage("studentSearchMessage", "No student selected", "error");
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/api/remove-student/", {
+        const response = await fetch(`${BASE_URL}remove-student/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ roll_no: roll })
@@ -258,7 +262,7 @@ issueBtn.addEventListener("click", async () => {
         return showMessage("issueMessage", "All fields required", "error");
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/api/issue-book/", {
+        const response = await fetch(`${BASE_URL}issue-book/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -295,7 +299,7 @@ returnBtn.addEventListener("click", async () => {
         return showMessage("issueMessage", "Enter Roll & Book No", "error");
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/api/return-book/", {
+        const response = await fetch(`${BASE_URL}return-book/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ roll_no: roll, book_number: bookNo })
@@ -319,7 +323,7 @@ returnBtn.addEventListener("click", async () => {
 // ================= DASHBOARD =================
 async function loadDashboardStats() {
     try {
-        const response = await fetch("http://127.0.0.1:8000/api/dashboard-stats/");
+        const response = await fetch(`${BASE_URL}dashboard-stats/`);
         const data = await response.json();
 
         totalStudents.innerText = data.total_students || 0;
