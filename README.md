@@ -152,7 +152,7 @@ Every database interaction in the application follows this pattern — a direct 
 import psycopg2
 
 conn = psycopg2.connect(
-    dbname="lms", user="postgres", password="your_password", host="localhost"
+    dbname="library", user="postgres", password="yourpassword", host="localhost"
 )
 cursor = conn.cursor()
 
