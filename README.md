@@ -14,9 +14,9 @@
 
 | Name | Roll No. |
 |------|----------|
-| Arun Raj Neupane | 080BCT0XX |
-| Naresh Rasaili | 080BCT0XX |
-| Bipin Tharu | 080BCT0XX |
+| Arun Raj Neupane | 080BCT006 |
+| Naresh Rasaili | 080BCT022 |
+| Bipin Tharu | 080BCT012 |
 
 </div>
 
