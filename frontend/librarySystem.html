@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Management System</title>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="librarySystemStyle.css" />
+</head>
+
+<body>
+
+    <!-- Login page -->
+    <div id="login-section">
+        <div class="login-box">
+            <h3>Library Login</h3>
+            <input type="text" placeholder="Username" class="input-field" />
+            <input type="password" placeholder="Password" class="input-field" />
+            <button class="btn-primary">Login</button>
+            <div id="loginMessage" class="form-message"></div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h4>LMS</h4>
+            <button onclick="showSection('dashboard')">Dashboard</button>
+            <button onclick="showSection('books')">Books</button>
+            <button onclick="showSection('students')">Students</button>
+            <button onclick="showSection('issue')">Issue/Return Books</button>
+            
+            <button onclick="logout()" class="btn-logout">Log out</button>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+
+            <!-- Dashboard -->
+            <div id="dashboard" class="section">
+                <h3>Dashboard</h3>
+                <div class="cards">
+                    <div class="card">
+                        <h5>Total Books</h5>
+                        <span id="totalBooks"></span>
+                    </div>
+                    <div class="card">
+                        <h5 >Total Students</h5>
+                        <span id="totalStudents"></span>
+                    </div>
+                    <div class="card">
+                        <h5 >Issued Books</h5>
+                        <span id="totalIssued"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Books -->
+            <div id="books" class="section">
+                <h3>Books Management</h3>
+
+                <div class="box-card">
+                    <h4>Search book</h4>
+                    <div class="search-box">
+                        <input id="bookSearchNo" type="text" placeholder="Enter book number to search" class="input-field" />
+                        <button id="bookSearchBtn" class="btn-search">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+
+                    <div id="bookSearchResult" class="search-result" style="display: none;">
+                        <p><strong>Book Name: </strong><span id="resultBookTitle"></span></p>
+                        <p><strong>Author: </strong><span id="resultBookAuthor"></span></p>
+                        <p><strong>Book Number:  </strong><span id="resultBookNo"> </span></p>
+                        <p><strong>Available: </strong><span id="resultBookAvailable"></span></p>
+                        
+
+                    </div>
+                </div>
+
+                <div class="box-card">
+
+                    <input id="bookNumber" type="text" placeholder="Book Number" class="input-field" />
+                    <input id="bookTitle" type="text" placeholder="Book Name" class="input-field" />
+                    <input id="bookAuthor" type="text" placeholder="Author" class="input-field" />
+                    <input id="totalCopies" type="number" placeholder="Total Copies" class="input-field" />
+
+                    <button id="addBookBtn" class="btn-success">Add Book</button>
+                     <div id="bookMessage" class="form-message"></div>
+                </div>
+            </div>
+
+            <!-- Students -->
+            <div id="students" class="section">
+                <h3>Students Management</h3>
+
+                <!-- Search Student -->
+                <div class="box-card">
+                    <h4>Search Student</h4>
+                    <div class="search-box">
+                        <input type="text" id="studentSearchRoll" class="input-field" placeholder="Enter Roll No" />
+                        <button id="studentSearchBtn" class="btn-search">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+
+                    <div id="studentSearchResult" class="search-result" style="display: none;">
+                        <p><strong>Name:</strong><span id="resultName"></span></p>
+                        <p><strong>Roll No:</strong><span id="resultRoll"></span></p>
+                        <p><strong>Batch:</strong><span id="resultBatch"></span></p>
+                        <p><strong>Faculty:</strong><span id="resultFaculty"></span></p>
+                        <p><strong>Email:</strong><span id="resultEmail"></span></p>
+                        <input type="hidden" id="selectedStudentRoll">
+                        <button class="btn-danger">Remove Student</button>
+                        <div id="studentSearchMessage" class="form-message"></div>
+                    </div>
+                </div>
+
+                <!-- Add Student -->
+                <div class="box-card">
+                    <h4>Add New Student</h4>
+
+                    <input id="studentName" type="text" class="input-field" placeholder="Student Name">
+                    <input id="studentRoll" type="text" class="input-field" placeholder="Roll No">
+                    <input id="studentBatch" type="text" class="input-field" placeholder="Batch">
+                    <input id="studentFaculty" type="text" class="input-field" placeholder="Faculty">
+                    <input id="studentEmail" type="email" class="input-field" placeholder="Email">
+
+                    <button id="addStudentBtn" class="btn-success">Add Student</button>
+                    <div id="studentMessage" class="form-message"></div>
+                </div>
+            </div>
+
+            <!-- Issue / Return -->
+            <div id="issue" class="section">
+                <h3>Issue / Return Books</h3>
+
+                <div class="box-card">
+                    <!-- Added IDs to these inputs -->
+                    <input type="text" id="issueRollNo" placeholder="Roll Number" class="input-field" />
+                    <input type="text" id="issueBookNo" placeholder="Book Number" class="input-field" />
+                    <h4>Issue date</h4>
+                    <input type="date" id="issueDate" placeholder="issue date" class="input-field" />
+                    <h4>Return date</h4>
+                    <input type="date" id="ReturnDate" placeholder="return date" class="input-field" />
+
+                    <div class="btn-action">
+                        <button id="issueBtn" class="btn-primary">Issue Book</button>
+                        <button id="returnBtn" class="btn-warning">Return Book</button>
+                         <div id="issueMessage" class="form-message"></div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+        </div>
+    </div>
+
+    <script src="librarySystem.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../dbmsbackend"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "dbms project"
+	}
+}
