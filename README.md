@@ -396,10 +396,10 @@ All POST requests are protected by Django's **CSRF middleware**. The CSRF token 
 All raw SQL uses **psycopg2 parameterized queries** (`%s` placeholders) — never string formatting. This completely prevents SQL injection:
 
 ```python
-# ✅ Safe — psycopg2 escapes the values
+# Safe — psycopg2 escapes the values
 cursor.execute("SELECT * FROM users WHERE roll_no = %s", (roll_no,))
 
-# ❌ Never done — vulnerable to SQL injection
+#  Never done — vulnerable to SQL injection
 cursor.execute(f"SELECT * FROM users WHERE roll_no = '{roll_no}'")
 ```
 
