@@ -9,7 +9,7 @@ DEBUG = os.environ.get("DEBUG", "True") == "True"
 # SECURITY
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-key')
 DEBUG = False
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['library-management-system-10rp.onrender.com']
 
 # Application definition
 INSTALLED_APPS = [
