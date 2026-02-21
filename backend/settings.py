@@ -74,7 +74,8 @@ USE_TZ = True
 
 # Static files (CSS, JS, images)
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [BASE_DIR / "library/static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # CORS
 CORS_ALLOW_ALL_ORIGINS = True

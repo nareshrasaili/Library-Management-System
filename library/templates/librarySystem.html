@@ -1,148 +1,110 @@
-<!doctype html>
+{% load static %}
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Management System</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-    <link rel="stylesheet" href="{% static 'frontend/librarySystemStyle.css' %}" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'frontend/librarySystemStyle.css' %}">
 </head>
-
 <body>
-
-    <!-- Login page -->
-    <div id="login-section">
-        <div class="login-box">
-            <h3>Library Login</h3>
-            <input type="text" placeholder="Username" class="input-field" />
-            <input type="password" placeholder="Password" class="input-field" />
+    <!-- LOGIN SECTION -->
+    <section id="login-section">
+        <h2>Library Login</h2>
+        <div>
+            <input type="text" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
             <button class="btn-primary">Login</button>
-            <div id="loginMessage" class="form-message"></div>
+            <p id="loginMessage" class="form-message"></p>
         </div>
-    </div>
+    </section>
 
-    <!-- Main App -->
-    <div id="app">
+    <!-- APP MAIN SECTION -->
+    <section id="app" style="display: none; flex-direction: column;">
+        <header>
+            <h1>Library Management Dashboard</h1>
+            <button onclick="logout()">Logout</button>
+        </header>
 
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <h4>LMS</h4>
+        <!-- NAVIGATION -->
+        <nav>
             <button onclick="showSection('dashboard')">Dashboard</button>
             <button onclick="showSection('books')">Books</button>
             <button onclick="showSection('students')">Students</button>
-            <button onclick="showSection('issue')">Issue/Return Books</button>
-            <button onclick="logout()" class="btn-logout">Log out</button>
+            <button onclick="showSection('issue')">Issue/Return</button>
+        </nav>
+
+        <!-- DASHBOARD SECTION -->
+        <div id="dashboard" class="section">
+            <h2>Dashboard</h2>
+            <div class="stats">
+                <div>Total Books: <span id="totalBooks">0</span></div>
+                <div>Total Students: <span id="totalStudents">0</span></div>
+                <div>Total Issued: <span id="totalIssued">0</span></div>
+            </div>
         </div>
 
-        <!-- Content -->
-        <div class="content">
+        <!-- BOOKS SECTION -->
+        <div id="books" class="section" style="display:none;">
+            <h2>Manage Books</h2>
+            <div id="bookMessage" class="form-message"></div>
+            <input id="bookNumber" placeholder="Book Number">
+            <input id="bookTitle" placeholder="Title">
+            <input id="bookAuthor" placeholder="Author">
+            <input id="totalCopies" placeholder="Total Copies">
+            <button id="addBookBtn">Add Book</button>
 
-            <!-- Dashboard -->
-            <div id="dashboard" class="section">
-                <h3>Dashboard</h3>
-                <div class="cards">
-                    <div class="card">
-                        <h5>Total Books</h5>
-                        <span id="totalBooks"></span>
-                    </div>
-                    <div class="card">
-                        <h5>Total Students</h5>
-                        <span id="totalStudents"></span>
-                    </div>
-                    <div class="card">
-                        <h5>Issued Books</h5>
-                        <span id="totalIssued"></span>
-                    </div>
-                </div>
+            <h3>Search Book</h3>
+            <input id="bookSearchNo" placeholder="Book Number">
+            <button id="bookSearchBtn">Search</button>
+
+            <div id="bookSearchResult" style="display:none;">
+                <p>Title: <span id="resultBookTitle"></span></p>
+                <p>Author: <span id="resultBookAuthor"></span></p>
+                <p>Book Number: <span id="resultBookNo"></span></p>
+                <p>Available: <span id="resultBookAvailable"></span></p>
             </div>
-
-            <!-- Books -->
-            <div id="books" class="section">
-                <h3>Books Management</h3>
-                <div class="box-card">
-                    <h4>Search book</h4>
-                    <div class="search-box">
-                        <input id="bookSearchNo" type="text" placeholder="Enter book number to search" class="input-field" />
-                        <button id="bookSearchBtn" class="btn-search">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                    <div id="bookSearchResult" class="search-result" style="display: none;">
-                        <p><strong>Book Name: </strong><span id="resultBookTitle"></span></p>
-                        <p><strong>Author: </strong><span id="resultBookAuthor"></span></p>
-                        <p><strong>Book Number:  </strong><span id="resultBookNo"> </span></p>
-                        <p><strong>Available: </strong><span id="resultBookAvailable"></span></p>
-                    </div>
-                </div>
-                <div class="box-card">
-                    <input id="bookNumber" type="text" placeholder="Book Number" class="input-field" />
-                    <input id="bookTitle" type="text" placeholder="Book Name" class="input-field" />
-                    <input id="bookAuthor" type="text" placeholder="Author" class="input-field" />
-                    <input id="totalCopies" type="number" placeholder="Total Copies" class="input-field" />
-                    <button id="addBookBtn" class="btn-success">Add Book</button>
-                    <div id="bookMessage" class="form-message"></div>
-                </div>
-            </div>
-
-            <!-- Students -->
-            <div id="students" class="section">
-                <h3>Students Management</h3>
-                <!-- Search Student -->
-                <div class="box-card">
-                    <h4>Search Student</h4>
-                    <div class="search-box">
-                        <input type="text" id="studentSearchRoll" class="input-field" placeholder="Enter Roll No" />
-                        <button id="studentSearchBtn" class="btn-search">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                    <div id="studentSearchResult" class="search-result" style="display: none;">
-                        <p><strong>Name:</strong><span id="resultName"></span></p>
-                        <p><strong>Roll No:</strong><span id="resultRoll"></span></p>
-                        <p><strong>Batch:</strong><span id="resultBatch"></span></p>
-                        <p><strong>Faculty:</strong><span id="resultFaculty"></span></p>
-                        <p><strong>Email:</strong><span id="resultEmail"></span></p>
-                        <input type="hidden" id="selectedStudentRoll">
-                        <button class="btn-danger">Remove Student</button>
-                        <div id="studentSearchMessage" class="form-message"></div>
-                    </div>
-                </div>
-
-                <!-- Add Student -->
-                <div class="box-card">
-                    <h4>Add New Student</h4>
-                    <input id="studentName" type="text" class="input-field" placeholder="Student Name">
-                    <input id="studentRoll" type="text" class="input-field" placeholder="Roll No">
-                    <input id="studentBatch" type="text" class="input-field" placeholder="Batch">
-                    <input id="studentFaculty" type="text" class="input-field" placeholder="Faculty">
-                    <input id="studentEmail" type="email" class="input-field" placeholder="Email">
-                    <button id="addStudentBtn" class="btn-success">Add Student</button>
-                    <div id="studentMessage" class="form-message"></div>
-                </div>
-            </div>
-
-            <!-- Issue / Return -->
-            <div id="issue" class="section">
-                <h3>Issue / Return Books</h3>
-                <div class="box-card">
-                    <input type="text" id="issueRollNo" placeholder="Roll Number" class="input-field" />
-                    <input type="text" id="issueBookNo" placeholder="Book Number" class="input-field" />
-                    <h4>Issue date</h4>
-                    <input type="date" id="issueDate" class="input-field" />
-                    <h4>Return date</h4>
-                    <input type="date" id="ReturnDate" class="input-field" />
-                    <div class="btn-action">
-                        <button id="issueBtn" class="btn-primary">Issue Book</button>
-                        <button id="returnBtn" class="btn-warning">Return Book</button>
-                        <div id="issueMessage" class="form-message"></div>
-                    </div>
-                </div>
-            </div>
-
         </div>
-    </div>
+
+        <!-- STUDENTS SECTION -->
+        <div id="students" class="section" style="display:none;">
+            <h2>Manage Students</h2>
+            <div id="studentMessage" class="form-message"></div>
+            <input id="studentName" placeholder="Name">
+            <input id="studentRoll" placeholder="Roll Number">
+            <input id="studentBatch" placeholder="Batch">
+            <input id="studentFaculty" placeholder="Faculty">
+            <input id="studentEmail" placeholder="Email">
+            <button id="addStudentBtn">Add Student</button>
+
+            <h3>Search Student</h3>
+            <input id="studentSearchRoll" placeholder="Roll Number">
+            <button id="studentSearchBtn">Search</button>
+
+            <div id="studentSearchResult" style="display:none;">
+                <p>Name: <span id="resultName"></span></p>
+                <p>Roll: <span id="resultRoll"></span></p>
+                <p>Batch: <span id="resultBatch"></span></p>
+                <p>Faculty: <span id="resultFaculty"></span></p>
+                <p>Email: <span id="resultEmail"></span></p>
+                <input type="hidden" id="selectedStudentRoll">
+                <button class="btn-danger">Remove Student</button>
+            </div>
+        </div>
+
+        <!-- ISSUE/RETURN SECTION -->
+        <div id="issue" class="section" style="display:none;">
+            <h2>Issue / Return Book</h2>
+            <div id="issueMessage" class="form-message"></div>
+            <input id="issueRollNo" placeholder="Student Roll">
+            <input id="issueBookNo" placeholder="Book Number">
+            <input id="issueDate" type="date">
+            <input id="ReturnDate" type="date">
+            <button id="issueBtn">Issue Book</button>
+            <button id="returnBtn">Return Book</button>
+        </div>
+    </section>
 
     <!-- JS -->
     <script src="{% static 'frontend/librarySystem.js' %}"></script>
