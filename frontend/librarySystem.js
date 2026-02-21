@@ -200,7 +200,7 @@ document.getElementById("studentSearchBtn").addEventListener("click", async () =
         const response = await fetch(`http://127.0.0.1:8000/api/search-student/?roll_no=${roll}`);
         const data = await response.json();
 
-        if (response.ok && data.status === "success") {
+        if (data.status === "success") {
             studentSearchResult.style.display = "block";
             document.getElementById("resultName").innerText = data.student.name;
             document.getElementById("resultRoll").innerText = data.student.roll_no;
@@ -212,14 +212,14 @@ document.getElementById("studentSearchBtn").addEventListener("click", async () =
             removeStudentBtn.style.display = "inline-block";
         } else {
             studentSearchResult.style.display = "none";
-            showMessage("studentSearchMessage", "Student not found", "error");
+            showMessage("studentMessage", data.message, "error");
         }
     } catch (err) {
+        studentSearchResult.style.display = "none";
         showMessage("studentSearchMessage", "Server not running", "error");
         console.error(err);
     }
 });
-
 // ================= REMOVE STUDENT =================
 removeStudentBtn.addEventListener("click", async () => {
     const roll = selectedStudentRoll.value;
