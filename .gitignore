@@ -1,0 +1,62 @@
+# =========================
+# Python / Django
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+db.sqlite3
+*.log
+
+# Django stuff
+*.pot
+*.pyc
+local_settings.py
+media/
+
+# Migrations cache (optional keep migrations if needed)
+**/migrations/*.pyc
+
+# =========================
+# Environment variables
+# =========================
+.env
+.env.*
+venv/
+env/
+ENV/
+.venv/
+
+# =========================
+# VS Code / IDE
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+
+# =========================
+# Static build files
+# =========================
+dist/
+build/
+
+# =========================
+# PostgreSQL
+# =========================
+*.sql
+dump.sql
+
+# =========================
+# Secrets
+# =========================
+secret.key
+*.pem
+*.key
