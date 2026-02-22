@@ -1,20 +1,43 @@
 // ================= BASE URL =================
 const BASE_URL = "https://library-management-system-10rp.onrender.com/api/";
 
+// ================= SHOW SECTION — GLOBAL via window =================
+window.showSection = function(sectionId) {
+    document.querySelectorAll(".section").forEach(function(section) {
+        section.style.display = "none";
+    });
+    document.getElementById(sectionId).style.display = "block";
+    if (sectionId === "dashboard") window.loadDashboardStats();
+}
+
+// ================= DASHBOARD STATS — GLOBAL via window =================
+window.loadDashboardStats = async function() {
+    try {
+        const response = await fetch(BASE_URL + "dashboard-stats/");
+        const data = await response.json();
+        document.getElementById("totalStudents").innerText = data.total_students || 0;
+        document.getElementById("totalBooks").innerText = data.total_books || 0;
+        document.getElementById("totalIssued").innerText = data.total_issued || 0;
+    } catch (err) {
+        console.error("Dashboard load failed", err);
+    }
+}
+
+// ================= LOGOUT — GLOBAL via window =================
+window.logout = function() {
+    document.getElementById("app").style.display = "none";
+    document.getElementById("login-section").style.display = "flex";
+    document.querySelector("#login-section input[type='text']").value = "";
+    document.querySelector("#login-section input[type='password']").value = "";
+}
 
 // ================= WAIT FOR DOM =================
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function() {
 
     // ================= BASIC ELEMENTS =================
     const loginSection = document.getElementById("login-section");
     const app = document.getElementById("app");
-    const sections = document.querySelectorAll(".section");
     const loginBtn = document.querySelector(".btn-primary");
-
-    // Dashboard elements
-    const totalBooks = document.getElementById("totalBooks");
-    const totalStudents = document.getElementById("totalStudents");
-    const totalIssued = document.getElementById("totalIssued");
 
     // Book elements
     const bookNumber = document.getElementById("bookNumber");
@@ -42,71 +65,55 @@ document.addEventListener("DOMContentLoaded", () => {
     const issueBtn = document.getElementById("issueBtn");
     const returnBtn = document.getElementById("returnBtn");
 
-    // ================= GLOBAL MESSAGE FUNCTION =================
-    function showMessage(elementId, message, type = "success") {
+    // ================= MESSAGE FUNCTION =================
+    function showMessage(elementId, message, type) {
+        type = type || "success";
         const box = document.getElementById(elementId);
         box.innerText = message;
-        box.className = `form-message ${type}`;
+        box.className = "form-message " + type;
         box.style.display = "block";
-
-        setTimeout(() => {
+        setTimeout(function() {
             box.style.display = "none";
         }, 3000);
     }
 
     // ================= LOGIN =================
-    loginBtn.addEventListener("click", async () => {
+    loginBtn.addEventListener("click", async function() {
         const email = document.querySelector("#login-section input[type='text']").value;
         const password = document.querySelector("#login-section input[type='password']").value;
 
         try {
-            const response = await fetch(`${BASE_URL}login/`, {
+            const response = await fetch(BASE_URL + "login/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email: email, password: password })
             });
 
             const data = await response.json();
 
             if (response.ok) {
                 showMessage("loginMessage", "Login successful", "success");
-                setTimeout(() => {
+                setTimeout(function() {
                     loginSection.style.display = "none";
                     app.style.display = "flex";
-                    showSection("dashboard");
+                    window.showSection("dashboard");
                 }, 800);
             } else {
                 showMessage("loginMessage", data.message, "error");
             }
         } catch (err) {
-            showMessage("loginMessage", "Backend server not running", err?.message);
+            showMessage("loginMessage", "Backend server not running", "error");
             console.error(err);
         }
     });
 
-    // ================= LOGOUT =================
-    window.logout = function() {
-        app.style.display = "none";
-        loginSection.style.display = "flex";
-        document.querySelector("#login-section input[type='text']").value = "";
-        document.querySelector("#login-section input[type='password']").value = "";
-    }
-
-    // ================= SHOW SECTION =================
-    function showSection(sectionId) {
-        sections.forEach(section => section.style.display = "none");
-        document.getElementById(sectionId).style.display = "block";
-
-        if (sectionId === "dashboard") loadDashboardStats();
-    }
-
     // ================= ADD BOOK =================
-    document.getElementById("addBookBtn").addEventListener("click", async () => {
+    document.getElementById("addBookBtn").addEventListener("click", async function() {
         if (!bookNumber.value || !bookTitle.value || !bookAuthor.value || !totalCopies.value)
             return showMessage("bookMessage", "All fields required", "error");
 
         try {
-            const response = await fetch(`${BASE_URL}add-book/`, {
+            const response = await fetch(BASE_URL + "add-book/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -135,17 +142,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ================= SEARCH BOOK =================
-    document.getElementById("bookSearchBtn").addEventListener("click", async () => {
+    document.getElementById("bookSearchBtn").addEventListener("click", async function() {
         const bookNo = bookSearchNo.value.trim();
         if (!bookNo) return showMessage("bookMessage", "Enter book number", "error");
 
         try {
-            const response = await fetch(`${BASE_URL}search-book/?book_number=${bookNo}`);
+            const response = await fetch(BASE_URL + "search-book/?book_number=" + bookNo);
             const data = await response.json();
-
             const resultBox = document.getElementById("bookSearchResult");
 
-            if (response.ok && data.books.length > 0) {
+            if (response.ok && data.books && data.books.length > 0) {
                 const book = data.books[0];
                 resultBox.style.display = "block";
                 document.getElementById("resultBookTitle").innerText = book.title;
@@ -163,12 +169,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ================= ADD STUDENT =================
-    document.getElementById("addStudentBtn").addEventListener("click", async () => {
+    document.getElementById("addStudentBtn").addEventListener("click", async function() {
         if (!studentName.value || !studentRoll.value || !studentEmail.value)
             return showMessage("studentMessage", "Name, Roll & Email required", "error");
 
         try {
-            const response = await fetch(`${BASE_URL}add-student/`, {
+            const response = await fetch(BASE_URL + "add-student/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -184,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.ok) {
                 showMessage("studentMessage", data.message, "success");
-                document.querySelectorAll("#students input").forEach(i => i.value = "");
+                document.querySelectorAll("#students input").forEach(function(i) { i.value = ""; });
             } else {
                 showMessage("studentMessage", data.message, "error");
             }
@@ -195,12 +201,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ================= SEARCH STUDENT =================
-    document.getElementById("studentSearchBtn").addEventListener("click", async () => {
+    document.getElementById("studentSearchBtn").addEventListener("click", async function() {
         const roll = studentSearchRoll.value.trim();
         if (!roll) return showMessage("studentSearchMessage", "Enter Roll No", "error");
 
         try {
-            const response = await fetch(`${BASE_URL}search-student/?roll_no=${roll}`);
+            const response = await fetch(BASE_URL + "search-student/?roll_no=" + roll);
             const data = await response.json();
 
             if (data.status === "success") {
@@ -210,7 +216,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("resultBatch").innerText = data.student.batch;
                 document.getElementById("resultFaculty").innerText = data.student.faculty;
                 document.getElementById("resultEmail").innerText = data.student.email;
-
                 selectedStudentRoll.value = data.student.roll_no;
                 removeStudentBtn.style.display = "inline-block";
             } else {
@@ -225,12 +230,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ================= REMOVE STUDENT =================
-    removeStudentBtn.addEventListener("click", async () => {
+    removeStudentBtn.addEventListener("click", async function() {
         const roll = selectedStudentRoll.value;
         if (!roll) return showMessage("studentSearchMessage", "No student selected", "error");
 
         try {
-            const response = await fetch(`${BASE_URL}remove-student/`, {
+            const response = await fetch(BASE_URL + "remove-student/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ roll_no: roll })
@@ -252,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ================= ISSUE BOOK =================
-    issueBtn.addEventListener("click", async () => {
+    issueBtn.addEventListener("click", async function() {
         const roll = issueRollNo.value.trim();
         const bookNo = issueBookNo.value.trim();
         const issueDateValue = issueDateInput.value;
@@ -262,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return showMessage("issueMessage", "All fields required", "error");
 
         try {
-            const response = await fetch(`${BASE_URL}issue-book/`, {
+            const response = await fetch(BASE_URL + "issue-book/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -291,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ================= RETURN BOOK =================
-    returnBtn.addEventListener("click", async () => {
+    returnBtn.addEventListener("click", async function() {
         const roll = issueRollNo.value.trim();
         const bookNo = issueBookNo.value.trim();
 
@@ -299,7 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return showMessage("issueMessage", "Enter Roll & Book No", "error");
 
         try {
-            const response = await fetch(`${BASE_URL}return-book/`, {
+            const response = await fetch(BASE_URL + "return-book/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ roll_no: roll, book_number: bookNo })
@@ -319,19 +324,5 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error(err);
         }
     });
-
-    // ================= DASHBOARD =================
-    async function loadDashboardStats() {
-        try {
-            const response = await fetch(`${BASE_URL}dashboard-stats/`);
-            const data = await response.json();
-
-            totalStudents.innerText = data.total_students || 0;
-            totalBooks.innerText = data.total_books || 0;
-            totalIssued.innerText = data.total_issued || 0;
-        } catch (err) {
-            console.error("Dashboard load failed", err);
-        }
-    }
 
 });
