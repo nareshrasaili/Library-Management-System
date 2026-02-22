@@ -16,7 +16,7 @@
 
             <input type="text" class="input-field" placeholder="Email" required>
             <input type="password" class="input-field" placeholder="Password" required>
-
+            <i class="fa-solid fa-eye" id="togglePassword"></i>
             <button class="btn-primary">Login</button>
             <p id="loginMessage" class="form-message"></p>
         </div>
@@ -62,14 +62,6 @@
                 <div id="bookMessage" class="form-message"></div>
 
                 <div class="box-card">
-                    <input id="bookNumber" class="input-field" placeholder="Book Number">
-                    <input id="bookTitle" class="input-field" placeholder="Title">
-                    <input id="bookAuthor" class="input-field" placeholder="Author">
-                    <input id="totalCopies" class="input-field" placeholder="Total Copies">
-                    <button id="addBookBtn" class="btn-success">Add Book</button>
-                </div>
-
-                <div class="box-card">
                     <h4>Search Book</h4>
                     <div class="search-box">
                         <input id="bookSearchNo" class="input-field" placeholder="Book Number">
@@ -83,22 +75,22 @@
                         <p>Available: <span id="resultBookAvailable"></span></p>
                     </div>
                 </div>
+
+                <div class="box-card">
+                    <input id="bookNumber" class="input-field" placeholder="Book Number">
+                    <input id="bookTitle" class="input-field" placeholder="Title">
+                    <input id="bookAuthor" class="input-field" placeholder="Author">
+                    <input id="totalCopies" class="input-field" placeholder="Total Copies">
+                    <button id="addBookBtn" class="btn-success">Add Book</button>
+                </div>
+
+
             </div>
 
             <!-- STUDENTS -->
             <div id="students" class="section">
                 <h3>Manage Students</h3>
                 <div id="studentMessage" class="form-message"></div>
-
-                <div class="box-card">
-                    <input id="studentName" class="input-field" placeholder="Name">
-                    <input id="studentRoll" class="input-field" placeholder="Roll Number">
-                    <input id="studentBatch" class="input-field" placeholder="Batch">
-                    <input id="studentFaculty" class="input-field" placeholder="Faculty">
-                    <input id="studentEmail" class="input-field" placeholder="Email">
-                    <button id="addStudentBtn" class="btn-success">Add Student</button>
-                </div>
-
                 <div class="box-card">
                     <h4>Search Student</h4>
                     <div class="search-box">
@@ -116,6 +108,16 @@
                         <button class="btn-danger">Remove Student</button>
                     </div>
                 </div>
+                <div class="box-card">
+                    <input id="studentName" class="input-field" placeholder="Name">
+                    <input id="studentRoll" class="input-field" placeholder="Roll Number">
+                    <input id="studentBatch" class="input-field" placeholder="Batch">
+                    <input id="studentFaculty" class="input-field" placeholder="Faculty">
+                    <input id="studentEmail" class="input-field" placeholder="Email">
+                    <button id="addStudentBtn" class="btn-success">Add Student</button>
+                </div>
+
+                
             </div>
 
             <!-- ISSUE / RETURN -->
