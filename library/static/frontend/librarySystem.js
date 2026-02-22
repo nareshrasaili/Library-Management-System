@@ -2,19 +2,35 @@
 const BASE_URL = "https://library-management-system-10rp.onrender.com/api/";
 
 
+// ================= SHOW SECTION (GLOBAL) =================
+function showSection(sectionId) {
+    document.querySelectorAll(".section").forEach(section => section.style.display = "none");
+    document.getElementById(sectionId).style.display = "block";
+    if (sectionId === "dashboard") loadDashboardStats();
+}
+
+
+// ================= DASHBOARD STATS (GLOBAL) =================
+async function loadDashboardStats() {
+    try {
+        const response = await fetch(`${BASE_URL}dashboard-stats/`);
+        const data = await response.json();
+        document.getElementById("totalStudents").innerText = data.total_students || 0;
+        document.getElementById("totalBooks").innerText = data.total_books || 0;
+        document.getElementById("totalIssued").innerText = data.total_issued || 0;
+    } catch (err) {
+        console.error("Dashboard load failed", err);
+    }
+}
+
+
 // ================= WAIT FOR DOM =================
 document.addEventListener("DOMContentLoaded", () => {
 
     // ================= BASIC ELEMENTS =================
     const loginSection = document.getElementById("login-section");
     const app = document.getElementById("app");
-    const sections = document.querySelectorAll(".section");
     const loginBtn = document.querySelector(".btn-primary");
-
-    // Dashboard elements
-    const totalBooks = document.getElementById("totalBooks");
-    const totalStudents = document.getElementById("totalStudents");
-    const totalIssued = document.getElementById("totalIssued");
 
     // Book elements
     const bookNumber = document.getElementById("bookNumber");
@@ -79,25 +95,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 showMessage("loginMessage", data.message, "error");
             }
         } catch (err) {
-            showMessage("loginMessage", "Backend server not running", err?.message);
+            showMessage("loginMessage", "Backend server not running", "error");
             console.error(err);
         }
     });
 
     // ================= LOGOUT =================
-    window.logout = function() {
+    window.logout = function () {
         app.style.display = "none";
         loginSection.style.display = "flex";
         document.querySelector("#login-section input[type='text']").value = "";
         document.querySelector("#login-section input[type='password']").value = "";
-    }
-
-    // ================= SHOW SECTION =================
-    function showSection(sectionId) {
-        sections.forEach(section => section.style.display = "none");
-        document.getElementById(sectionId).style.display = "block";
-
-        if (sectionId === "dashboard") loadDashboardStats();
     }
 
     // ================= ADD BOOK =================
@@ -319,19 +327,5 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error(err);
         }
     });
-
-    // ================= DASHBOARD =================
-    async function loadDashboardStats() {
-        try {
-            const response = await fetch(`${BASE_URL}dashboard-stats/`);
-            const data = await response.json();
-
-            totalStudents.innerText = data.total_students || 0;
-            totalBooks.innerText = data.total_books || 0;
-            totalIssued.innerText = data.total_issued || 0;
-        } catch (err) {
-            console.error("Dashboard load failed", err);
-        }
-    }
 
 });
