@@ -1,5 +1,5 @@
 // ================= BASE URL =================
-const BASE_URL = "/api/";
+const BASE_URL = "https://library-management-system-10rp.onrender.com/api/";
 
 
 // ================= WAIT FOR DOM =================
