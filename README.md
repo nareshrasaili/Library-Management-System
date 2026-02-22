@@ -6,7 +6,7 @@
 
 *"Streamlining library operations through smart digitization"*
 
-🌐 **Live Deployment:** [https://your-lms-deployment.vercel.app](https://your-lms-deployment.vercel.app)
+
 
 ---
 
