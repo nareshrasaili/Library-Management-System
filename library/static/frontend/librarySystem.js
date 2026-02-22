@@ -1,6 +1,7 @@
 // ================= BASE URL =================
 const BASE_URL = "/api/";
 
+
 // ================= WAIT FOR DOM =================
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -78,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 showMessage("loginMessage", data.message, "error");
             }
         } catch (err) {
-            showMessage("loginMessage", "Backend server not running", "error");
+            showMessage("loginMessage", "Backend server not running", err?.message);
             console.error(err);
         }
     });
