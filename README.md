@@ -707,7 +707,7 @@ DB_PORT=5432
 
 | Name | Role | Key Contributions |
 |------|------|-------------------|
-| **Arun Raj Neupane** | Frontend Developer | UI/UX design, HTML/CSS/JS implementation, responsive sidebar layout, all page screens (Login, Dashboard, Books, Students, Issue/Return), JavaScript navigation engine, fetch API integration, form validation |
+| **Arun Raj Neupane** | Frontend Developer | UI/UX design, HTML/CSS/JS implementation, responsive sidebar layout, all page screens (Login, Dashboard, Books, Students, Issue/Return), JavaScript navigation engine, fetch API integration |
 | **Naresh Rasaili** | Backend Developer | Django project setup, URL routing, all view functions, raw SQL query writing for auth/book/author/student modules, session management, psycopg2 integration |
 | **Bipin Tharu** | Backend Developer | Full PostgreSQL schema design (`library.sql`), `issued_book` transaction query logic, `available_copies` enforcement via `UPDATE` statements, FK constraint design, parameterized query safety, audit trail implementation |
 
