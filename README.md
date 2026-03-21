@@ -673,7 +673,7 @@ python manage.py runserver
 Visit **http://127.0.0.1:8000** and log in with the default librarian account:
 
 ```
-Email:    arun123@gmail.com
+Email:    admin123@gmail.com
 Password: arun123
 ```
 
